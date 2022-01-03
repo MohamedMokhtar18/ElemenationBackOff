@@ -13,6 +13,6 @@ pop and the other a push), the popping thread returns the pusher’s value and t
 thread gets a dummy value signalling a successful elimination. Since neither of the threads
 needs the central stack anymore, contention at the top of the stack is reduced. Since
 this algorithm only alters the backoff mechanic, it maintains good throughput under low
-workloads of the lock-free stack. At the time of publication, this feature was not achieved
+workloads of the lock free stack. At the time of publication, this feature was not achieved
 by other concurrent stack implementations performing well under high workloads, making
 this the first robust and scalable solution with relatively low overhead per operation
