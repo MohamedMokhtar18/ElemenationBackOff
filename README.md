@@ -6,7 +6,7 @@ notion that push and pop operations are able to cancel each other out. The corre
 of elimination revolves around the fact that if two threads push and pop sequentially, the
 state of the stack is not altered. Therefore they do not need the stack and can simply
 exchange values. When a thread backoffs from the central stack due to contention, it will
-try to exchange values in an elimination array, an array implementation consisting of lockfree exchangers. A lock-free exchanger is an object that provides a way for two threads to
+try to exchange values in an elimination array, an array implementation consisting of lock-free exchangers. A lock-free exchanger is an object that provides a way for two threads to
 exchange values. When two threads meet in a lock-free exchanger an event occurs which
 is referred to as a collision. If both colliding threads perform opposite operations (one is a
 pop and the other a push), the popping thread returns the pusher’s value and the pushing
