@@ -1,5 +1,5 @@
 # ElemenationBackOff
-## Overviiew
+## Overview
 backoff stack uses the lock-free stack as a framework but has an altered backoff scheme.
 It uses elimination, a method to reduce contention at the top of the stack, based upon the
 notion that push and pop operations are able to cancel each other out. The correctness
