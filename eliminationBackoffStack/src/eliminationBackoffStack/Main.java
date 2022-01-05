@@ -98,6 +98,7 @@ class Main {
     System.out.println("Starting "+TH+" threads with "+name);
     testThreads(true);
     System.out.println("Was LIFO? "+wasLIFO(NUM));
+    System.out.println("so");
   }
 
 
