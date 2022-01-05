@@ -25,7 +25,7 @@ modular nature. Major areas of improvement are:
 * Handling unequal distributions of push and pop operations. The elimination-backoff
 stack’s performance decays rapidly as the number of pops and pushes unbalances,
 this is due to successful eliminations requiring a pop and a push operation. This
-shortcoming is addressed by Gal Bar-Nissan, Danny Hendler and Adi Suissa in [2]
+shortcoming is addressed by Gal Bar-Nissan, Danny Hendler and Adi Suissa in 
 where they present the Dynamic Elimination-Combining Stack algorithm (DECS).
 This algorithm uses a mechanic which also allows the elimination of operations of
 
