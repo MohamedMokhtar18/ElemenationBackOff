@@ -39,5 +39,5 @@ point of improvement is where this paper will be focusing on. When operations of
 the same type collide the values are exchanged and only when the threads are done
 executing the exchange operation, it is verified that the collision was performed
 correctly. If an incorrect collision occurs, the entire operation has to be reversed,
-wasting clock cycles. In this thesis, an altered implementation of the eliminationbackoff stack is introduced, an implementation in which threads executing the same
+wasting clock cycles. In this thesis, an altered implementation of the eliminationbackoff stack is introduced, an implementation in which threads executing the same
 operation can not collide.
