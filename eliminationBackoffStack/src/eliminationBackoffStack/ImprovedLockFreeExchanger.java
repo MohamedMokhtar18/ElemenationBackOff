@@ -5,49 +5,69 @@ import java.util.concurrent.atomic.*;
 
 
 
-class Exchanger<T> {
-  AtomicStampedReference<T> slot;
-  static final int EMPTY = 0;
-  static final int WAITING = 1;
-  static final int BUSY = 2;
+class ImprovedLockFreeExchanger<T> {
+	static final int EMPTY = 0 , WAITINGPOPPER = 1 , WAITINGPUSHER = 2 , BUSY =3 ;
+	 AtomicStampedReference<T> slot = new AtomicStampedReference<>(null , 0 ) ;
   // slot: stores value and stamp
   // EMPTY: slot has no value.
   // WAITING: slot has 1st value, waiting for 2nd.
   // BUSY: slot has 2nd value, waiting to be empty.
 
-  public Exchanger() {
-    slot = new AtomicStampedReference<>(null, 0);
+  public ImprovedLockFreeExchanger() {
   }
 
 
-  public T exchange(T y, long timeout, TimeUnit unit)
+  public T exchange(T myItem , long timeout , TimeUnit unit)
     throws TimeoutException {
-    long w = unit.toNanos(timeout); 
-    long W = System.nanoTime() + w; 
-    int[] stamp = {EMPTY};
-    while (System.nanoTime() < W) { 
-      T x = slot.get(stamp); 
-      switch (stamp[0]) {    
-        case EMPTY:    
-        if (addA(y)) { 
-          while (System.nanoTime() < W)            
-            if ((x = removeB()) != null) return x; 
-          throw new TimeoutException(); 
-        }
-        break;
-        case WAITING:   
-        if (addB(x, y)) 
-          return x;     
-        break;
-        case BUSY: 
-        break;     
-        default:
-      }
+	int status = myItem == null ? WAITINGPOPPER : WAITINGPUSHER;
+	long nanos = unit.toNanos (timeout) ; 
+	long timeBound = System . nanoTime ( ) + nanos ;
+    int[] stampHolder = {EMPTY};
+    while ( true ) {
+    	if ( System . nanoTime ( ) > timeBound )
+    	throw new TimeoutException ( ) ;
+    T yrItem = slot.get ( stampHolder ) ;
+    int stamp = stampHolder [ 0 ] ;
+    switch ( stamp ) {
+    case EMPTY:
+    	if ( slot.compareAndSet ( yrItem , myItem , EMPTY, status ) ) {
+    		while ( System.nanoTime ( ) < timeBound ) {
+    			yrItem = slot.get ( stampHolder ) ;
+    			if ( stampHolder [ 0 ] == BUSY) {
+    				 slot.set( null , EMPTY) ;
+    				 return yrItem ;
+    			}
+    		}
+    		if ( slot. compareAndSet (myItem , null , status , EMPTY) ) {
+    			throw new TimeoutException ( ) ;
+    		}else {
+    			yrItem = slot.get ( stampHolder ) ;
+    			 slot.set (null , EMPTY) ;
+    			 return yrItem ;
+    		}
+    	}
+    	break ;
+    case WAITINGPOPPER:
+    	if (status != WAITINGPOPPER && slot.compareAndSet(yrItem,myItem ,WAITINGPOPPER, BUSY)) {
+    		return yrItem ;
+    	}
+    	break ;
+    case WAITINGPUSHER:
+    	if ( status != WAITINGPUSHER && slot . compareAndSet ( yrItem , myItem ,WAITINGPUSHER, BUSY) ) {
+    		return yrItem ;
+    	}
+    	break ;
+    case BUSY:
+    	break ;
+    	}
+    	
     }
-    throw new TimeoutException(); 
-  }
 
+    }
 
+  
+
+/*
   private boolean addA(T y) { 
     return slot.compareAndSet(null, y, EMPTY, WAITING);
   }
@@ -65,4 +85,5 @@ class Exchanger<T> {
     slot.set(null, EMPTY); 
     return x;              
   }
+  */
 }
