@@ -68,7 +68,6 @@ class Main {
 
   static void testThreads(boolean backoff) {
     stack = new ArrayDeque<>();
-    concurrentStack = new EliminationBackoffStack<>();
     poppedValues = new List[TH];
     for (int i=0; i<TH; i++)
       poppedValues[i] = new ArrayList<>();

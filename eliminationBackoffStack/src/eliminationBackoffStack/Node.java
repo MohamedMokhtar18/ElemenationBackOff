@@ -6,5 +6,6 @@ class Node<T> {
 
 	  public Node(T x) {
 	    value = x;
+	    next=null;
 	  }
 	}
