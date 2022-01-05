@@ -6,26 +6,19 @@ import java.util.concurrent.*;
 
 
 class EliminationArray<T> {
-  Exchanger<T>[] exchangers;
-  final long TIMEOUT;
-  final TimeUnit UNIT;
-  Random random;
-  // exchangers: array of exchangers
-  // TIMEOUT: exchange timeout number
-  // UNIT: exchange timeout unit
-  // random: random number generator
-
-  public EliminationArray(int capacity, long timeout, TimeUnit unit) {
-    exchangers = new Exchanger[capacity];
-    for (int i=0; i<capacity; i++)
-      exchangers[i] = new Exchanger<>();
-    random = new Random();
-    TIMEOUT = timeout;
-    UNIT = unit;
-  }
-
-  public T visit(T x) throws TimeoutException {
-    int i = random.nextInt(exchangers.length);
-    return exchangers[i].exchange(x, TIMEOUT, UNIT);
-  }
+	private static final int duration = 1 ;
+	 ImprovedLockFreeExchanger<T>[] exchanger ;
+	 Random random ;
+	 public EliminationArray ( int capacity ) {
+		 exchanger = ( ImprovedLockFreeExchanger<T>[] ) new
+				 ImprovedLockFreeExchanger [ capacity ] ;
+		 for ( int i = 0 ; i < capacity ; i++) {
+			 exchanger [ i ] = new ImprovedLockFreeExchanger<T>() ;
+		 }
+		 random = new Random ( ) ;
+	 }
+	 public T visit (T value , int range ) throws TimeoutException {
+		 int slot = random . nextInt ( range ) ;
+		 return ( exchanger [ slot ] . exchange ( value , duration ,TimeUnit .MILLISECONDS) ) ;
+	 }
 }
