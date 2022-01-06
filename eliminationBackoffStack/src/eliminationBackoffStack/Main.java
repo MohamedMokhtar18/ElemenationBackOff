@@ -3,6 +3,8 @@ package eliminationBackoffStack;
 import java.io.IOException;
 import java.util.*;
 
+import com.google.caliper.Runner;
+
 class Main {
   static Deque<Integer> stack;
   static EliminationBackoffStack<Integer> concurrentStack;
@@ -86,7 +88,7 @@ class Main {
   }
 
   public static void main(String[] args) {
-    System.out.println("Please enter number of threads that we will start with");
+ /*   System.out.println("Please enter number of threads that we will start with");
 	Scanner scan = new Scanner(System.in);
 	TH= scan.nextInt();
 	System.out.println("Starting "+TH+" threads with sequential stack");
@@ -97,7 +99,8 @@ class Main {
     System.out.println("Starting "+TH+" threads with "+name);
     testThreads(true);
     System.out.println("Was LIFO? "+wasLIFO(NUM));
-    System.out.println("so");
+    System.out.println("so");*/
+	  Runner.main(args);
   }
 
 
