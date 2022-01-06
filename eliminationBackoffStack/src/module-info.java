@@ -1,2 +1,3 @@
 module eliminationBackoffStack {
+	requires caliper;
 }

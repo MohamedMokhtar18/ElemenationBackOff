@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.*;
 
 
 
-class ImprovedEliminationBackoffStack<T> extends LockFreeStack<T> {
+public class ImprovedEliminationBackoffStack<T> extends LockFreeStack<T> {
 	 static final int capacity = 8 ;
 	EliminationArray<T> eliminationArray = new EliminationArray <>(capacity -1 ) ;
 	 static ThreadLocal<RangePolicy> policy = new ThreadLocal <>() {
