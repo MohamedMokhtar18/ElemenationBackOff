@@ -1,11 +1,11 @@
 package eliminationBackoffStack;
 
-class Node<T> {
-	  public T value;
-	  public Node<T> next;
+public class Node<T> {
+	public T value;
+	public Node<T> next;
 
-	  public Node(T x) {
-	    value = x;
-	    next=null;
-	  }
+	public Node(T x) {
+		value = x;
+		next = null;
 	}
+}
