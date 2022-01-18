@@ -30,6 +30,7 @@ public class LockFreeStack<T> implements ConcurrentStack<T> {
 	protected Node<T> tryPop() throws NullPointerException {
 		Node<T> oldTop = top.get();
 		if (oldTop == null) {
+			System.out.println("tryPop empty oldtop");
 			throw new NullPointerException();
 		}
 		Node<T> newTop = oldTop.next;

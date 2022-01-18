@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.*;
 
 public class ImprovedEliminationBackoffStack<T> extends LockFreeStack<T> {
 	 static final int capacity = 8 ;
-	EliminationArray<T> eliminationArray = new EliminationArray <>(capacity -1 ) ;
+	 ImprovedEliminationArray<T> eliminationArray = new ImprovedEliminationArray <>(capacity -1 ) ;
 	 static ThreadLocal<RangePolicy> policy = new ThreadLocal <>() {
 	 protected synchronized RangePolicy initialValue ( ) {
 	 return new RangePolicy ( capacity - 1 ) ;
@@ -44,6 +44,6 @@ public class ImprovedEliminationBackoffStack<T> extends LockFreeStack<T> {
 	  } catch ( TimeoutException ex ) {
 		  rangePolicy .recordEliminationTimeout(); ;
 	  }
-	   }
-	   }
-	   }
+}
+}
+}
